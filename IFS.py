@@ -109,7 +109,7 @@ class cIFS:
         # размер для домена
         sD = s * 2
         for level in range(self.maxlevelDomain):
-            self.domain_list+=self.get_rang(sD, sD / 2, level, False)
+            self.domain_list.append(self.get_rang(sD, sD / 2, level, False))
             sD //= 2
 
         # обработка
@@ -121,9 +121,7 @@ class cIFS:
                 self.maxFract = i
 
             for rang in self.levelRange[i]:
-
                 findDomain = False
-                levelDomain = 0
                 # погрешность
                 bestDomain = 0
                 minEps = float('inf')
@@ -152,9 +150,16 @@ class cIFS:
                         #разбиваем ранг на след уровень
                         nextLevelTree = rang.get_next_level_tree()
 
+                        newSize = rang.size/2
+                        newCoord = [(rang.x, rang.y), (rang.x, rang.y+newSize), (rang.x+newSize, rang.y+newSize), (rang.x+newSize, rang.y)]
                         for i in range(4):
-                            #сделать нормальные координаты
-                            self.levelRange[rang.level+1] += range_struct(size=rang.size/2, step=rang.size/2, x=rang.x, y=y, img=self.img, level=level)
+                            self.levelRange[rang.level+1].append(range_struct(size=newSize, step=newSize, x=newCoord[i][0], y=newCoord[i][1], img=self.img, level=rang.level+1))
+                    else:
+                        rang.domainSource = bestDomain
+
+
+
+
 
 
 

@@ -14,25 +14,26 @@ class range_struct:
         #массив изображения в растре для заданного блока
         self.data=self.set_raster()
         #для рангов
-        self.domainSource = 0 #хранит координаты блока, размер, отражение, угол, контраст, яркость
+        self.domainSource = 0 #хранит координаты доменного блока, размер, отражение, угол, контраст, яркость
+        #если данный показатель истинный - ранг не храним в сжатом файле
         self.haveNextLevel = False
 
     def set_raster(self):
-        if self.data!=[]:
-            self.data=[[0 for i in range(self.size)] for j in range(self.size)]
+        self.data=[[0 for i in range(self.size)] for j in range(self.size)]
         for i in range(self.size):
             for j in range(self.size):
-                self.data[i][j] = self.img[self.x, self.y]
+                self.data[i][j] = self.img[self.x+i, self.y+j]
 
-    def (self):
+    def get_next_level_tree(self):
         self.haveNextLevel = True
+        #добавить исключения
         if self.arr==0:
             print('Error in rang')
             return
         vector = []
         for i in range(1, 5):
             b=self.arr
-            b[self.level+1]=i
+            b[self.level+1] = i
             vector.append(b)
         return vector
 
